@@ -2,7 +2,7 @@
   "name": "Ulysses",
   "version": "0.0.1",
   "scripts": {
-    "test": "",
+    "test": "mocha --reporter spec test/*-test.js",
     "dev": "nodemon --exec babel-node ./bin/www"
   },
   "engines": {
@@ -43,6 +43,8 @@
     "gulp-scss-lint": "^0.3.4",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^1.4.1",
+    "jscs": "^2.1.1",
+    "jshint": "^2.8.0",
     "mocha": "^2.3.3",
     "should": "^7.1.0",
     "vinyl-source-stream": "^1.1.0",
