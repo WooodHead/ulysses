@@ -1,0 +1,7 @@
+{
+    "name": "Ulysses",
+    "dependencies": {
+    "jquery": "^2.1.4",
+    "bootstrap-sass": "^3.3.5"
+    }
+}
