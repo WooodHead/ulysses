@@ -1,0 +1,21 @@
+/**
+ * Main application navigation
+ */
+@import "../base/color";
+
+.ulysses-navbar {
+  @extend .navbar-default;
+  background-color: $elementBackgroundGrey;
+
+  .navbar-nav > li > a, .navbar-default .navbar-text {
+    color: $textColorGrey;
+  }
+
+  .navbar-nav > li > a:hover {
+    color: $textColorGreyHover;
+  }
+
+  .navbar-brand {
+    color: $textColorGrey;
+  }
+}

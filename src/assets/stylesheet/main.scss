@@ -1,3 +1,7 @@
-@import "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-compass";
+/*
+ * Base SCSS file that collects all the other style files
+ */
 
+
+// Base layout
+@import "./layout/layout";

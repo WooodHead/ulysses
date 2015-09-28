@@ -1,7 +1,14 @@
 doctype html
 html
     head
-        title= title
+        meta(charset='utf-8')
+        title #{title}
+        link(rel='stylesheet', href='/css/components.css')
         link(rel='stylesheet', href='/css/main.css')
+        meta(name='csrf-token', content=_csrf)
     body
-        block content
+        include navbar
+        .wrapper
+            include flash
+            block content
+        include footer
