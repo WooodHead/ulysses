@@ -16,6 +16,8 @@ const validator = require('express-validator');
 const passport = require('passport');
 const path = require('path');
 
+const user = require('./src/model/User');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

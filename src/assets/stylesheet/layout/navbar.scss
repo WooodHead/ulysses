@@ -11,11 +11,7 @@
     color: $textColorGrey;
   }
 
-  .navbar-nav > li > a:hover {
+  .navbar-nav > li > a:hover, .navbar-brand:hover {
     color: $textColorGreyHover;
-  }
-
-  .navbar-brand {
-    color: $textColorGrey;
   }
 }

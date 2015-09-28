@@ -1,3 +1,38 @@
+# compiled files
 /public/css/*.css
 /public/js/*.js
+
+# downloaded stuff
 bower_components
+
+#Postgresql data
+/data/postgres/pg_snapshots
+/data/postgres/pg_stat_tmp
+/data/postgres/pg_twophase
+/data/postgres/pg_tblspc
+/data/postgres/pg_logical
+/data/postgres/base
+/data/postgres/pg_subtrans
+/data/postgres/pg_dynshmem
+/data/postgres/postmaster.pid
+/data/postgres/pg_multixact
+/data/postgres/pg_clog
+/data/postgres/pg_hba.conf
+/data/postgres/global
+/data/postgres/pg_stat
+/data/postgres/PG_VERSION
+/data/postgres/pg_replslot
+/data/postgres/pg_serial
+/data/postgres/postgresql.auto.conf
+/data/postgres/postmaster.opts
+/data/postgres/pg_ident.conf
+/data/postgres/postgresql.conf
+/data/postgres/pg_xlog
+/data/postgres/pg_notify
+
+# Rethinkdb data
+/data/rethinkdb/tmp
+/data/rethinkdb/log_file
+
+# SQLite data
+*.sqlite
