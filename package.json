@@ -2,7 +2,7 @@
   "name": "Ulysses",
   "version": "0.0.1",
   "scripts": {
-    "test": "mocha --reporter spec test/**/*-test.js",
+    "test": "mocha --reporter spec ./test/test-*.js",
     "dev": "nodemon --exec babel-node ./bin/www"
   },
   "engines": {
