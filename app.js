@@ -16,7 +16,13 @@ const validator = require('express-validator');
 const passport = require('passport');
 const path = require('path');
 
-const user = require('./src/model/User');
+
+// Init schema
+// WARNING: Forced sync => drop table!
+require('./src/model/SyncHandler').sequelize.sync({force: true}).then(function () {
+    console.log('db synchronized');
+});
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
