@@ -19,7 +19,7 @@ const path = require('path');
 
 // Init schema
 // WARNING: Forced sync => drop table!
-require('./src/model/SyncHandler').sequelize.sync({force: true}).then(function () {
+require('./src/model/bootstrap').sequelize.sync({force: true}).then(function () {
     console.log('db synchronized');
 });
 
@@ -72,7 +72,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
-app.listen();
 
 module.exports = app;

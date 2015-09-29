@@ -12,7 +12,8 @@ module.exports = function (sequelize, dataType) {
         },
         name: {
             type: dataType.STRING,
-            allowNull: false
+            allowNull: true,
+            comment: 'The real name (First/LastName)'
         },
         email: {
             type: dataType.STRING,

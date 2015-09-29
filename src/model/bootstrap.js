@@ -23,6 +23,8 @@ const schemaPath = path.join(__dirname, 'schema');
 fs.readdirSync(schemaPath).forEach(function (file) {
     const model = sequelize.import(path.join(schemaPath, file));
     schema.set(model.name, model);
+
+    console.log('added model ' + model.name);
 });
 
 
@@ -30,6 +32,8 @@ schema.forEach(function (value, key) {
     // Call the associate object in the corresponding model using the es6 map.
     if ('associate' in value) {
         schema.get(key).associate(schema);
+
+        console.log('added relationship to model ' + key);
     }
 });
 

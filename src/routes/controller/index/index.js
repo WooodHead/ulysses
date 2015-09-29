@@ -1,7 +1,8 @@
-exports.definition = [{
-    'method': 'get',
-    path: '/',
-    'handler':  function(req, res){
-        res.render('index', {title: 'Ulysses'});
-    }
-}];
+const Express = require('express');
+const router = Express.Router();
+
+router.get('/', function (req, res) {
+    res.render('index', {title: 'Ulysses'});
+});
+
+exports.router = router;
