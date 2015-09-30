@@ -22,6 +22,12 @@ module.exports = function (passport, csrf, flash) {
     });
 
 
+    Router.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+
     Router.post('/signup', function (req, res) {
         if (req.user) return res.redirect('/');
 
