@@ -1,13 +1,13 @@
-const User = require('../model/schema/User');
+const User = require('../model/bootstrap').sequelize.models.users;
 const Passport = require('passport');
 const LocalPassport = require('passport-local').Strategy;
 const PasswordCrypt = require('./PasswordCrypt');
 
-passport.serializeUser(function (user, done) {
+Passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function (id, done) {
+Passport.deserializeUser(function (id, done) {
     User.findAll({
         where: {
             id: id
@@ -20,7 +20,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 
-passport.use(new LocalPassport({usernameField: 'email'}, function (email, password, done) {
+Passport.use(new LocalPassport({usernameField: 'email'}, function (email, password, done) {
     email = email.toLowerCase();
 
     User.findAll({

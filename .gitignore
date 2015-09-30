@@ -36,3 +36,6 @@ bower_components
 
 # SQLite data
 *.sqlite
+
+# Redis data
+*.rdb

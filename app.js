@@ -8,12 +8,15 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const errorHandler = require('errorhandler');
-const csrf = require('lusca');
+
 const methodOverride = require('method-override');
 
 const flash = require('express-flash');
 const validator = require('express-validator');
-const passport = require('passport');
+const PassportConfig = require('./src/auth/LocalPassportHandler');
+const Passport = require('passport');
+
+
 const path = require('path');
 
 
@@ -37,15 +40,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
 app.use(methodOverride());
 app.use(cookieParser());
+app.use(flash());
 
 app.use(Express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
-
-// TODO: Requires session support
-//app.use(csrf({
-//    csrf: true,
-//    xframe: 'SAMEORIGIN',
-//    xssProtection: true
-//}));
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
 
 require('./src/routes/bootstrap')(app);
 
