@@ -30,16 +30,16 @@ module.exports = function (env) {
     env.use(passportInitialized);
     env.use(passportSession);
     env.use(csrfSession);
+    env.use(flashed);
 
     const views = [];
     fs.readdirSync(__dirname + '/controller').forEach(function (name) {
         const controller = require('./controller/' + name)(passportInitialized, csrfSession, flashed);
-        env.use(controller);
-
         const app = Express();
 
-        views.push(__dirname + '/controller/' + name + '/views');
-
+        const viewDir = __dirname + '/controller/' + name + '/views';
+        app.set('view engine', 'jade');
+        app.set('views', viewDir);
         app.use(cookies);
         app.use(definedSession);
         app.use(passportInitialized);
@@ -47,14 +47,20 @@ module.exports = function (env) {
         app.use(csrfSession);
         app.use(flashed);
 
+        app.use(function (req, res, next) {
+            res.locals.user = req.user;
+            next();
+        });
+
         app.use(controller);
         env.use(app);
 
         console.log('mounted controller ' + name);
     });
-    env.set('view engine', 'jade');
-    const defViewPath = env.get('views');
-    views.push(defViewPath);
-    env.set('views', views);
-    env.use(flashed);
+
+
+    env.use(function (req, res, next) {
+        res.locals.user = req.user;
+        next();
+    });
 };
