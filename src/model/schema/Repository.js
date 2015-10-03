@@ -59,7 +59,7 @@ module.exports = function (sequelize, dataType) {
             defaultValue: 0,
             comment: '0 = no contributions from others, 1 = contributions from organisation, 2 = free for everyone'
         },
-        isPrivate: {
+        private: {
             type: dataType.BOOLEAN,
             defaultValue: false
         },

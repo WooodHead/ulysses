@@ -73,7 +73,7 @@ module.exports = function (sequelize, dataType) {
         lastLogin: {
             type: dataType.DATE
         },
-        isAdmin: {
+        admin: {
             type: dataType.BOOLEAN,
             defaultValue: false,
             allowNull: false
