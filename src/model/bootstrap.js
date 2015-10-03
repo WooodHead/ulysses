@@ -4,6 +4,8 @@
  *
  * If a new table is required, add a new file in the src/model/schema directory and this file
  * will pick it up. No other efforts are required.
+ *
+ * Indexes require a separate call from ../app.js in the schema sync
  */
 
 const fs = require('fs');

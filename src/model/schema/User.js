@@ -78,6 +78,31 @@ module.exports = function (sequelize, dataType) {
             defaultValue: false,
             allowNull: false
         }
+    }, {
+        classMethods: {
+            /**
+             * Build up the relation
+             *
+             * @param {Map} models all other schema models
+             */
+            associate: function (models) {
+                // currently nothing
+            }, indexes: function () {
+                sequelize.getQueryInterface().addIndex('users', {
+                    type: 'FULLTEXT',
+                    unique: false,
+                    fields: ['username']
+                });
+                sequelize.getQueryInterface().addIndex('users', {
+                    type: 'FULLTEXT',
+                    unique: true,
+                    fields: ['email'],
+                    where: {
+                        verified: 1,
+                        enabled: 1
+                    }
+                });
+            }
+        }
     }, {paranoid: true});
 };
-

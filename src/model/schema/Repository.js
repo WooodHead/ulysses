@@ -82,8 +82,16 @@ module.exports = function (sequelize, dataType) {
                     },
                     as: 'Owner'
                 });
+
+            }, indexes: function () {
+                sequelize.getQueryInterface().addIndex('repositories', {
+                    type: 'FULLTEXT',
+                    unique: false,
+                    fields: ['title']
+                });
             }
         }
     }, {paranoid: true});
+
     return Repository;
 };

@@ -1,6 +1,7 @@
 const Passport = require('passport');
+const PassportConfig  = require('../../../auth/LocalPassportHandler');
 const PasswordCrypto = require('../../../auth/PasswordCrypt');
-const User = require('../../../model/bootstrap').sequelize.models.users;
+const User = require('../../../model/commonModel').user;
 const Express = require('express');
 const Router = Express.Router();
 
@@ -68,6 +69,17 @@ module.exports = function (passport, csrf, flash) {
 
     Router.post('/login', function (req, res) {
         if (req.user) return res.redirect('/');
+
+        req.assert('email', 'Email must be a valid mail').isEmail();
+        req.assert('password', 'Password too short - must be at least 6 characters long').len(6);
+
+        const errors = req.validationErrors();
+        if (errors) {
+            req.flash('errors', errors);
+            return res.redirect('/login');
+        }
+
+
     });
 
     return Router;

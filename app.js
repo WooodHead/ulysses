@@ -4,10 +4,8 @@ const app = Express();
 const cookieParser = require('cookie-parser');
 const compress = require('compression');
 const favicon = require('serve-favicon');
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const errorHandler = require('errorhandler');
 
 const methodOverride = require('method-override');
 
@@ -22,8 +20,10 @@ const path = require('path');
 
 // Init schema
 // WARNING: Forced sync => drop table!
-require('./src/model/bootstrap').sequelize.sync({force: true}).then(function () {
-    console.log('db synchronized');
+require('./src/model/bootstrap').sequelize.sync({force: true}).then(function (result) {
+    const models = result.models;
+    models.repositories.indexes();
+    models.users.indexes();
 });
 
 
