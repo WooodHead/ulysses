@@ -101,6 +101,17 @@ module.exports = function (sequelize, dataType) {
                     unique: false,
                     fields: ['OwnerId']
                 });
+            }, findRepositoryByOwnerId: function (ownerId, cb) {
+                Repository.findAll(
+                    {
+                        where: {
+                            OwnerId: ownerId
+                        }
+                    }).then(function (result) {
+                        cb(null, result);
+                    }).error(function (err) {
+                        cb(err, null);
+                    });
             }
         }
     }, {paranoid: true});

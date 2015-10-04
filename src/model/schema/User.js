@@ -1,5 +1,5 @@
 module.exports = function (sequelize, dataType) {
-    const User =  sequelize.define('users', {
+    const User = sequelize.define('users', {
         id: {
             primaryKey: true,
             autoIncrement: true,
@@ -114,6 +114,24 @@ module.exports = function (sequelize, dataType) {
                         enabled: 1
                     }
                 });
+            }, findUserById: function (id, cb) {
+                User.findById(id)
+                    .then(function (result) {
+                        cb(null, result);
+                    }).error(function (err) {
+                        cb(err, null);
+                    });
+            }, findUserByEmail: function (mail, cb) {
+                User.findAll(
+                    {
+                        where: {
+                            email: mail
+                        }
+                    }).then(function (result) {
+                        cb(null, result);
+                    }).error(function (err) {
+                        cb(err, null);
+                    })
             }
         }
     }, {paranoid: true});

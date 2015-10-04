@@ -19,7 +19,6 @@ module.exports = function (passport, csrf, flash) {
 
     Router.get('/login', function (req, res) {
         if (req.user) return res.redirect('/');
-        res.render('login', {title: 'Login'});
     });
 
 
