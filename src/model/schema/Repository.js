@@ -31,6 +31,12 @@ module.exports = function (sequelize, dataType) {
             allowNull: true,
             comment: 'a template for each new issue'
         },
+        issueUsage: {
+            type: dataType.ENUM,
+            values: [0, 1, 2, 3],
+            defaultValue: 1,
+            comment: '0 = everybody can create issue (with or without an account), 1 = only registered members, 2 = only group member, 3 = only the owner'
+        },
         wikiEnabled: {
             type: dataType.BOOLEAN,
             defaultValue: false
@@ -76,7 +82,7 @@ module.exports = function (sequelize, dataType) {
              */
             associate: function (models) {
                 Repository.belongsTo(models.get('users'), {
-                    onDelete: "CASCADE",
+                    onDelete: 'CASCADE',
                     foreignKey: {
                         allowNull: false
                     },
@@ -88,6 +94,12 @@ module.exports = function (sequelize, dataType) {
                     type: 'FULLTEXT',
                     unique: false,
                     fields: ['title']
+                });
+
+                sequelize.getQueryInterface().addIndex('repositories', {
+                    type: 'FULLTEXT',
+                    unique: false,
+                    fields: ['OwnerId']
                 });
             }
         }

@@ -1,5 +1,5 @@
 const Passport = require('passport');
-const PassportConfig  = require('../../../auth/LocalPassportHandler');
+const PassportConfig = require('../../../auth/LocalPassportHandler');
 const PasswordCrypto = require('../../../auth/PasswordCrypt');
 const User = require('../../../model/commonModel').user;
 const Express = require('express');
@@ -79,7 +79,24 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/login');
         }
 
+        User.findOne({
+            where: {
+                email: req.body.email
+            }
+        }).then(function (result) {
+            if (result) {
+                req.login(result.dataValues, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.redirect('/');
+                    }
 
+                    res.redirect('/');
+                });
+            }
+        }).error(function (err) {
+            console.log(err);
+        });
     });
 
     return Router;

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, dataType) {
-    return sequelize.define('users', {
+    const User =  sequelize.define('users', {
         id: {
             primaryKey: true,
             autoIncrement: true,
@@ -89,14 +89,26 @@ module.exports = function (sequelize, dataType) {
                 // currently nothing
             }, indexes: function () {
                 sequelize.getQueryInterface().addIndex('users', {
-                    type: 'FULLTEXT',
-                    unique: false,
-                    fields: ['username']
+                    unique: true,
+                    fields: ['username', 'email'],
+                    where: {
+                        verified: 1,
+                        enabled: 1
+                    }
                 });
+
                 sequelize.getQueryInterface().addIndex('users', {
-                    type: 'FULLTEXT',
                     unique: true,
                     fields: ['email'],
+                    where: {
+                        verified: 1,
+                        enabled: 1
+                    }
+                });
+
+                sequelize.getQueryInterface().addIndex('users', {
+                    unique: true,
+                    fields: ['id'],
                     where: {
                         verified: 1,
                         enabled: 1
@@ -105,4 +117,6 @@ module.exports = function (sequelize, dataType) {
             }
         }
     }, {paranoid: true});
+
+    return User;
 };

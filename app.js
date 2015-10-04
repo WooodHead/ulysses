@@ -18,12 +18,15 @@ const Passport = require('passport');
 const path = require('path');
 
 
+const syncRequired = process.env.SYNC_DB === 'yes';
 // Init schema
 // WARNING: Forced sync => drop table!
-require('./src/model/bootstrap').sequelize.sync({force: true}).then(function (result) {
-    const models = result.models;
-    models.repositories.indexes();
-    models.users.indexes();
+require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(function (result) {
+    if (syncRequired) {
+        const models = result.models;
+        models.repositories.indexes();
+        models.users.indexes();
+    }
 });
 
 
