@@ -122,10 +122,21 @@ module.exports = function (sequelize, dataType) {
                         cb(err, null);
                     });
             }, findUserByEmail: function (mail, cb) {
-                User.findAll(
+                User.findOne(
                     {
                         where: {
                             email: mail
+                        }
+                    }).then(function (result) {
+                        cb(null, result);
+                    }).error(function (err) {
+                        cb(err, null);
+                    })
+            }, findUserByUsername: function (username, cb) {
+                User.findOne(
+                    {
+                        where: {
+                            username: username
                         }
                     }).then(function (result) {
                         cb(null, result);

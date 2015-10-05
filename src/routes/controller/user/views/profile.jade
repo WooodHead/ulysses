@@ -1,0 +1,21 @@
+extends ../../../../../views/layout
+block content
+    .jumbotron
+        .container
+            h1 #{user.username}
+            p
+            |  #{user.description}
+            p
+                a.btn.btn-primary.btn-lg(href='/follow/u/#{user.username}', role='button') Follow
+    .container
+        .row
+            .col-md-8
+                h2 Latest Activity
+                p
+                    a.btn.btn-default(href='/activity/u/#{user.username}', role='button') More ...
+            .col-md-4
+                h2 Repositories
+                    ul.list-unstyled
+                        li
+                    ul
+

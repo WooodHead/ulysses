@@ -2,12 +2,27 @@ const Passport = require('passport');
 const PassportConfig = require('../../../auth/LocalPassportHandler');
 const PasswordCrypto = require('../../../auth/PasswordCrypt');
 const User = require('../../../model/commonModel').user;
+const Repository = require('../../../model/commonModel').repository;
 const Express = require('express');
 const Router = Express.Router();
 
 module.exports = function (passport, csrf, flash) {
     Router.get('/u/:user', function (req, res) {
-        res.send('test');
+        User.findUserByUsername(req.params.user, function (err, result) {
+            if (result) {
+                const user = result;
+                Repository.findRepositoryByOwnerId(user.id, function (err, result) {
+                    var repo = [{}];
+                    if (result) {
+                        repo = result.dataValues;
+                    }
+                    res.render('profile', {user: user, repository: repo});
+                });
+            } else {
+                // Probably better to 404 instead of redirecting
+                res.redirect('/');
+            }
+        });
     });
 
 
