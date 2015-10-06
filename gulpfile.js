@@ -9,6 +9,7 @@ const source = require('vinyl-source-stream');
 const scsslint = require('gulp-scss-lint');
 const cache = require('gulp-cached');
 const sass = require('gulp-sass');
+const watch = require('gulp-watch');
 
 const sassPath = './src/assets/stylesheet/*.scss';
 const sassPathComponents = './src/assets/stylesheet/components/components.scss';
@@ -39,7 +40,7 @@ gulp.task('scss-lint', function () {
         .pipe(scsslint());
 });
 
-gulp.task('scss-components', ['scss-lint'], function () {
+gulp.task('scss-components', function () {
     gulp.src(sassPathComponents)
         .pipe(sass()
             .on('error', sass.logError))
@@ -48,23 +49,22 @@ gulp.task('scss-components', ['scss-lint'], function () {
 });
 
 
-gulp.task('scss', ['scss-lint', 'scss-components'], function () {
+gulp.task('scss', ['scss-components'], function () {
     gulp.src(sassPath)
-        .pipe(sass()
-            .on('error', sass.logError))
+        .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulpIf(production, minify()))
         .pipe(gulp.dest('./public/css'));
 });
 
 
-gulp.task('scss-watch', function () {
+gulp.task('watch:scss', function () {
     gulp.watch(sassPath, ['scss']);
 });
 
 
-gulp.task('scss-lint', function () {
+gulp.task('watch:scss-lint', function () {
     gulp.watch(sassPath, ['scss-lint']);
 });
 
 
-gulp.task('default', ['scss-lint', 'scss-components', 'scss', 'js', 'components', 'scss-watch']);
+gulp.task('default', ['scss-components', 'scss', 'js', 'components', 'watch:scss']);
