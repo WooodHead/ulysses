@@ -14,7 +14,6 @@ const validator = require('express-validator');
 const PassportConfig = require('./src/auth/LocalPassportHandler');
 const Passport = require('passport');
 
-
 const path = require('path');
 
 
@@ -48,6 +47,7 @@ app.use(flash());
 app.use(Express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
 app.use(function (req, res, next) {
     res.locals.user = req.user;
+    res.locals.version = require('./package.json').version;
     next();
 });
 
