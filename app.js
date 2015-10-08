@@ -16,7 +16,6 @@ const Passport = require('passport');
 
 const path = require('path');
 
-
 const syncRequired = process.env.SYNC_DB === 'yes';
 // Init schema
 // WARNING: Forced sync => drop table!
