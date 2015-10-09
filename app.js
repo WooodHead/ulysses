@@ -15,6 +15,7 @@ const PassportConfig = require('./src/auth/LocalPassportHandler');
 const Passport = require('passport');
 
 const path = require('path');
+const config = require('./config/AppConfig');
 
 const syncRequired = process.env.SYNC_DB === 'yes';
 // Init schema
@@ -76,6 +77,6 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', 3000);
+app.set('port', config.port);
 
 module.exports = app;
