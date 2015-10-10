@@ -15,6 +15,7 @@ const PassportConfig = require('./src/auth/LocalPassportHandler');
 const Passport = require('passport');
 
 const path = require('path');
+
 const config = require('./config/AppConfig');
 
 const syncRequired = process.env.SYNC_DB === 'yes';
@@ -32,7 +33,6 @@ require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(func
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.set('port', 3000);
 
 // middleware
 app.use(logger('dev'));
@@ -79,4 +79,8 @@ app.use(function (err, req, res, next) {
 
 app.set('port', config.port);
 
-module.exports = app;
+const server = app.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + server.address().port);
+});
+
+module.exports = server;

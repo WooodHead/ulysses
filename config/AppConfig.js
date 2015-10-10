@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
     port: 3000,
     redis: {
         port: 6379,
