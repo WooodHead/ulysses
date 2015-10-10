@@ -6,6 +6,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const lusca = require('lusca');
 const RedisStore = require('connect-redis')(session);
+const PassportConfig = require('../auth/LocalPassportHandler');
 
 module.exports = function (env) {
     const cookies = cookieParser();
@@ -34,7 +35,7 @@ module.exports = function (env) {
 
     const views = [];
     fs.readdirSync(__dirname + '/controller').forEach(function (name) {
-        const controller = require('./controller/' + name)(passportInitialized, csrfSession, flashed);
+        const controller = require('./controller/' + name)();
         const app = Express();
 
         const viewDir = __dirname + '/controller/' + name + '/views';

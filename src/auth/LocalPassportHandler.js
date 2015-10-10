@@ -23,11 +23,12 @@ Passport.deserializeUser(function (id, done) {
 Passport.use(new LocalPassport({usernameField: 'email'}, function (email, password, done) {
     email = email.toLowerCase();
 
-    User.findAll({
+    User.findOne({
         where: {
             email: email
         }
     }).then(function (user) {
+        debugger;
         if (!user) return done(null, false, {message: 'Email ' + email + ' not found'});
         PasswordCrypt.comparePassword(password, user.password, function (err, match) {
             if (match) {
@@ -37,6 +38,7 @@ Passport.use(new LocalPassport({usernameField: 'email'}, function (email, passwo
             }
         });
     }).error(function (err) {
+        console.log('err: ' + err);
         if (!user) return done(null, false, {message: err.message});
     });
 }));

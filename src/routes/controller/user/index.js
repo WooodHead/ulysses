@@ -6,7 +6,7 @@ const Repository = require('../../../model/commonModel').repository;
 const Express = require('express');
 const Router = Express.Router();
 
-module.exports = function (passport, csrf, flash) {
+module.exports = function () {
     Router.get('/u/:user', function (req, res) {
         User.findUserByUsername(req.params.user, function (err, result) {
             if (result) {
@@ -82,7 +82,7 @@ module.exports = function (passport, csrf, flash) {
     });
 
 
-    Router.post('/login', function (req, res) {
+    Router.post('/login', function (req, res, next) {
         if (req.user) return res.redirect('/');
 
         req.assert('email', 'Email must be a valid mail').isEmail();
@@ -94,24 +94,21 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/login');
         }
 
-        User.findOne({
-            where: {
-                email: req.body.email
+        Passport.authenticate('local', function (err, user, info) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
             }
-        }).then(function (result) {
-            if (result) {
-                req.login(result.dataValues, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.redirect('/');
-                    }
 
-                    res.redirect('/');
-                });
-            }
-        }).error(function (err) {
-            console.log(err);
-        });
+            req.login(user.dataValues, function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.redirect('/');
+                }
+
+                res.redirect('/');
+            });
+        })(req, res, next);
     });
 
     return Router;
