@@ -9,6 +9,7 @@ const Repository = commonModel.repository;
 
 
 function existsRepository(repositoryName, ownerId, cb) {
+
     Repository
         .findOne({
             where: {

@@ -9,6 +9,7 @@ const RedisStore = require('connect-redis')(session);
 const PassportConfig = require('../auth/LocalPassportHandler');
 
 module.exports = function (env) {
+
     const cookies = cookieParser();
     const definedSession = session({
         resave: false,
@@ -26,6 +27,7 @@ module.exports = function (env) {
         xframe: 'SAMEORIGIN',
         xssProtection: true
     });
+
     env.use(cookies);
     env.use(definedSession);
     env.use(passportInitialized);
@@ -35,6 +37,7 @@ module.exports = function (env) {
 
     const views = [];
     fs.readdirSync(__dirname + '/controller').forEach(function (name) {
+
         const controller = require('./controller/' + name)();
         const app = Express();
 
@@ -49,6 +52,7 @@ module.exports = function (env) {
         app.use(flashed);
 
         app.use(function (req, res, next) {
+
             res.locals.user = req.user;
             next();
         });
@@ -61,6 +65,7 @@ module.exports = function (env) {
 
 
     env.use(function (req, res, next) {
+
         res.locals.user = req.user;
         next();
     });

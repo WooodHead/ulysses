@@ -23,6 +23,7 @@ const schema = new Map();
 
 const schemaPath = path.join(__dirname, 'schema');
 fs.readdirSync(schemaPath).forEach(function (file) {
+
     const model = sequelize.import(path.join(schemaPath, file));
     schema.set(model.name, model);
 

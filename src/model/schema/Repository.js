@@ -1,4 +1,5 @@
 module.exports = function (sequelize, dataType) {
+
     const Repository = sequelize.define('repositories', {
         id: {
             primaryKey: true,
@@ -81,6 +82,7 @@ module.exports = function (sequelize, dataType) {
              * @param {Map} models all other schema models
              */
             associate: function (models) {
+
                 Repository.belongsTo(models.get('users'), {
                     onDelete: 'CASCADE',
                     foreignKey: {
@@ -90,6 +92,7 @@ module.exports = function (sequelize, dataType) {
                 });
 
             }, indexes: function () {
+                
                 sequelize.getQueryInterface().addIndex('repositories', {
                     type: 'FULLTEXT',
                     unique: false,
@@ -102,14 +105,17 @@ module.exports = function (sequelize, dataType) {
                     fields: ['OwnerId']
                 });
             }, findRepositoryByOwnerId: function (ownerId, cb) {
+
                 Repository.findAll(
                     {
                         where: {
                             OwnerId: ownerId
                         }
                     }).then(function (result) {
+
                         cb(null, result);
                     }).error(function (err) {
+
                         cb(err, null);
                     });
             }

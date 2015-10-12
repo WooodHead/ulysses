@@ -1,4 +1,5 @@
 module.exports = function (sequelize, dataType) {
+
     const User = sequelize.define('users', {
         id: {
             primaryKey: true,
@@ -88,6 +89,7 @@ module.exports = function (sequelize, dataType) {
             associate: function (models) {
                 // currently nothing
             }, indexes: function () {
+
                 sequelize.getQueryInterface().addIndex('users', {
                     unique: true,
                     fields: ['username', 'email'],
@@ -115,32 +117,41 @@ module.exports = function (sequelize, dataType) {
                     }
                 });
             }, findUserById: function (id, cb) {
+
                 User.findById(id)
                     .then(function (result) {
+
                         cb(null, result);
                     }).error(function (err) {
+
                         cb(err, null);
                     });
             }, findUserByEmail: function (mail, cb) {
+
                 User.findOne(
                     {
                         where: {
                             email: mail
                         }
                     }).then(function (result) {
+
                         cb(null, result);
                     }).error(function (err) {
+
                         cb(err, null);
                     })
             }, findUserByUsername: function (username, cb) {
+
                 User.findOne(
                     {
                         where: {
                             username: username
                         }
                     }).then(function (result) {
+
                         cb(null, result);
                     }).error(function (err) {
+
                         cb(err, null);
                     })
             }

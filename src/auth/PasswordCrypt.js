@@ -11,11 +11,17 @@ const saltToUse = 16;
  * @param cb {Function} callback that gets called with the results
  */
 exports.comparePassword = function (password, currentPassword, cb) {
+
     Bcrypt.compare(password, currentPassword, function (err, matched) {
-        if (err) return cb(err, false);
+
+        if (err) {
+            return cb(err, false);
+        }
+
         cb(null, matched);
     });
 };
+
 
 /**
  * Crypts the given password
@@ -24,9 +30,13 @@ exports.comparePassword = function (password, currentPassword, cb) {
  * @param cb {Function} callback with the resulting password
  */
 exports.cryptPassword = function (password, cb) {
+
     const passwd = password;
     Bcrypt.genSalt(saltToUse, function (err, salt) {
-        if (err) return cb(err);
+
+        if (err) {
+            return cb(err);
+        }
 
         const hashed = Bcrypt.hashSync(passwd, salt, null);
         cb(null, hashed);
