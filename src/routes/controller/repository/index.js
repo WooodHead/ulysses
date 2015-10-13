@@ -26,36 +26,119 @@ function existsRepository(repositoryName, ownerId, cb) {
 }
 
 module.exports = function (passport, csrf, flash) {
-
+    /**
+     * Shows the requested repository
+     *
+     * !!! Requires Permissions !!!
+     */
     Router.get('/u/:user/:repo', function (req, res, next) {
 
         res.render('index');
     });
 
-
+    /**
+     * Creates a new repository
+     */
     Router.get('/u/:user/repository/new', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
         res.render('index');
     });
 
 
-    Router.post('/u/:user/repository/new', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+    /**
+     * Creates a new repository for this user
+     */
+    Router.post('/u/:user/repository/new', PermissionValidation.isLoggedIn, function (req, res, next) {
         res.render('index');
     });
 
 
+    /**
+     * Deletes the repository
+     */
     Router.get('/u/:user/:repository/delete', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
         res.render('index');
     });
 
 
+    /**
+     * Get the repository settings
+     */
     Router.get('/u/:user/:repository/settings', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
         res.render('index');
     });
 
 
+    /**
+     * Update the repository settings
+     */
     Router.post('/u/:user/:repository/settings', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
         res.render('index');
     });
+
+
+    /**
+     * Watch the repository
+     */
+    Router.get('/u/:user/:repository/watch', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Fav the repository
+     */
+    Router.get('/u/:user/:repository/fav', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Adds a new branch
+     */
+    Router.post('/u/:user/:repository/branch/new', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Returns all branches
+     */
+    Router.post('/u/:user/:repository/branches', PermissionValidation.isLoggedIn, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Renames the branch-name
+     */
+    Router.post('/u/:user/:repository/:branch/rename', PermissionValidation.isLoggedIn, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Deletes the branch
+     */
+    Router.post('/u/:user/:repository/:branch/delete', PermissionValidation.isLoggedIn, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Checks out the given branch
+     */
+    Router.get('/u/:user/:repository/:branch', PermissionValidation.isLoggedIn, function (req, res, next) {
+        res.render('index');
+    });
+
+
+    /**
+     * Checks out the given tag
+     */
+    Router.get('/u/:user/:repository/:tag', PermissionValidation.isLoggedIn, function (req, res, next) {
+        res.render('index');
+    });
+
 
     return Router;
 };

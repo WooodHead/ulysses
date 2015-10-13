@@ -8,6 +8,9 @@ const Router = Express.Router();
 
 module.exports = function () {
 
+    /**
+     * Get the basic user profile
+     */
     Router.get('/u/:user', function (req, res) {
 
         User.findUserByUsername(req.params.user, function (err, result) {
@@ -29,6 +32,9 @@ module.exports = function () {
     });
 
 
+    /**
+     * Get the signup page
+     */
     Router.get('/signup', function (req, res, next) {
 
         if (req.user) {
@@ -39,6 +45,9 @@ module.exports = function () {
     });
 
 
+    /**
+     * Get the login page
+     */
     Router.get('/login', function (req, res) {
 
         if (req.user) {
@@ -49,6 +58,9 @@ module.exports = function () {
     });
 
 
+    /**
+     * Logout
+     */
     Router.get('/logout', function (req, res) {
 
         req.logout();
@@ -56,6 +68,9 @@ module.exports = function () {
     });
 
 
+    /**
+     * Try to sign up using the posted credentials
+     */
     Router.post('/signup', function (req, res) {
 
         if (req.user) {
@@ -72,39 +87,51 @@ module.exports = function () {
             return res.redirect('/signup');
         }
 
-        User.findAll({where: {email: req.body.email}}).then(function (users) {
+        // the user table has a primary key on the mail, it should be unique across the table.
+        User.findAll(
+            {
+                where: {
+                    email: req.body.email
+                }
+            }).then(function (users) {
+                // we search using `findAll`, that should create an Array of users who have the same email.
+                if (users.length == 0) {
+                    PasswordCrypto.cryptPassword(req.body.password, function (err, hashed) {
 
-            if (users.length == 0) {
-                PasswordCrypto.cryptPassword(req.body.password, function (err, hashed) {
+                        const user = User.create({
+                            email: req.body.email,
+                            username: req.body.username,
+                            name: req.body.name,
+                            password: hashed
+                        }).then(function (result) {
 
-                    const user = User.create({
-                        email: req.body.email,
-                        username: req.body.username,
-                        name: req.body.name,
-                        password: hashed
-                    }).then(function (result) {
+                            req.login(result.dataValues, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    return;
+                                }
 
-                        req.login(result.dataValues, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
+                                res.redirect('/');
+                            });
+                        }).error(function (err) {
 
-                            res.redirect('/');
+                            console.log('err while creating a new user: ' + err);
                         });
-                    }).error(function (err) {
-
-                        console.log('err while creating a new user: ' + err);
                     });
-                });
-            }
-        }).error(function (err) {
+                } else {
+                    // seems like the user already exists, redirect it
+                    return res.redirect('/signup');
+                }
+            }).error(function (err) {
 
-            console.log(err);
-        });
+                console.log(err);
+            });
     });
 
 
+    /**
+     * Try to log in
+     */
     Router.post('/login', function (req, res, next) {
 
         if (req.user) {
@@ -138,6 +165,80 @@ module.exports = function () {
             });
         })(req, res, next);
     });
+
+
+    /**
+     * Get the user settings
+     * - TODO: Needs passport isLoggedIn guard
+     */
+    router.get('settings/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Update the settings of the user
+     * - TODO: Needs passport isLoggedIn guard
+     */
+    router.post('settings/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Gets the update page for the SSH Keys
+     */
+    router.get('/keys/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Updates the SSH Keys
+     */
+    router.post('/keys/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Gets the update page for the user profile
+     */
+    router.get('/profile/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Updates the user profile
+     */
+    router.post('/profile/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+    /**
+     * Deletes the user account
+     */
+    router.get('/delete/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Gets the activity stream
+     */
+    router.get('/activity/:user/', function (req, res, next) {
+        res.redirect('/');
+    });
+
+
+    /**
+     * Follows a user
+     */
+    router.get('/follow/u/:user', function (req, res, next) {
+        res.redirect('/');
+    });
+
 
     return Router;
 };
