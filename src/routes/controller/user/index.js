@@ -171,7 +171,7 @@ module.exports = function () {
      * Get the user settings
      * - TODO: Needs passport isLoggedIn guard
      */
-    router.get('settings/u/:user', function (req, res, next) {
+    Router.get('settings/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -180,7 +180,7 @@ module.exports = function () {
      * Update the settings of the user
      * - TODO: Needs passport isLoggedIn guard
      */
-    router.post('settings/u/:user', function (req, res, next) {
+    Router.post('settings/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -188,7 +188,7 @@ module.exports = function () {
     /**
      * Gets the update page for the SSH Keys
      */
-    router.get('/keys/u/:user', function (req, res, next) {
+    Router.get('/keys/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -196,7 +196,7 @@ module.exports = function () {
     /**
      * Updates the SSH Keys
      */
-    router.post('/keys/u/:user', function (req, res, next) {
+    Router.post('/keys/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -204,7 +204,7 @@ module.exports = function () {
     /**
      * Gets the update page for the user profile
      */
-    router.get('/profile/u/:user', function (req, res, next) {
+    Router.get('/profile/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -212,14 +212,14 @@ module.exports = function () {
     /**
      * Updates the user profile
      */
-    router.post('/profile/u/:user', function (req, res, next) {
+    Router.post('/profile/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
     /**
      * Deletes the user account
      */
-    router.get('/delete/u/:user', function (req, res, next) {
+    Router.get('/delete/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -227,7 +227,7 @@ module.exports = function () {
     /**
      * Gets the activity stream
      */
-    router.get('/activity/:user/', function (req, res, next) {
+    Router.get('/activity/:user/', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -235,7 +235,7 @@ module.exports = function () {
     /**
      * Follows a user
      */
-    router.get('/follow/u/:user', function (req, res, next) {
+    Router.get('/follow/u/:user', function (req, res, next) {
         res.redirect('/');
     });
 
