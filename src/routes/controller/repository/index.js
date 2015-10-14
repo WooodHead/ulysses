@@ -39,7 +39,14 @@ module.exports = function (passport, csrf, flash) {
     /**
      * Creates a new repository
      */
-    Router.get('/u/:user/repository/new', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+    Router.get('/repositories/u/:user', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
+        res.render('index');
+    });
+
+    /**
+     * Gets all repositories for this user
+     */
+    Router.get('/repositories/u/:user', PermissionValidation.isLoggedIn, PermissionValidation.isOwner, function (req, res, next) {
         res.render('index');
     });
 
@@ -47,7 +54,7 @@ module.exports = function (passport, csrf, flash) {
     /**
      * Creates a new repository for this user
      */
-    Router.post('/u/:user/repository/new', PermissionValidation.isLoggedIn, function (req, res, next) {
+    Router.post('/repository/new', PermissionValidation.isLoggedIn, function (req, res, next) {
         res.render('index');
     });
 

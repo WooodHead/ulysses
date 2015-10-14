@@ -11,6 +11,10 @@
             ul.nav.navbar-nav
                 li
                     a(href='/') My Feed
+                li
+                    a(href='/repository/new') New Repository
+                li
+                    a(href='/repository/new') New Repository
             ul.nav.navbar-nav.navbar-right
                 if !user
                     li
@@ -18,5 +22,7 @@
                     li
                         a(href='/signup') Create Account
                 else
+                    li
+                        a(href='/settings') My Account
                     li
                         a(href='/logout') Logout

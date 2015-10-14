@@ -1,3 +1,4 @@
+const gravatar = require('gravatar');
 const Passport = require('passport');
 const PassportConfig = require('../../../auth/LocalPassportHandler');
 const PasswordCrypto = require('../../../auth/PasswordCrypt');
@@ -102,7 +103,8 @@ module.exports = function () {
                             email: req.body.email,
                             username: req.body.username,
                             name: req.body.name,
-                            password: hashed
+                            password: hashed,
+                            avatarUrl: gravatar.url(req.body.email, {s: '100', r: 'x', d: 'retro'}, true)
                         }).then(function (result) {
 
                             req.login(result.dataValues, function (err) {
@@ -171,7 +173,7 @@ module.exports = function () {
      * Get the user settings
      * - TODO: Needs passport isLoggedIn guard
      */
-    Router.get('settings/u/:user', function (req, res, next) {
+    Router.get('/settings', function (req, res, next) {
         res.redirect('/');
     });
 
@@ -180,7 +182,7 @@ module.exports = function () {
      * Update the settings of the user
      * - TODO: Needs passport isLoggedIn guard
      */
-    Router.post('settings/u/:user', function (req, res, next) {
+    Router.post('/settings', function (req, res, next) {
         res.redirect('/');
     });
 
