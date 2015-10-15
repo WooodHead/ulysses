@@ -51,7 +51,7 @@ describe('Login SignUp', function () {
             })
             .end(function (err, result) {
                 should(err).be.null;
-                should(result.status).be.equal(500);
+                should(result.status).be.equal(302);
                 done();
             });
     });
@@ -68,7 +68,7 @@ describe('Login SignUp', function () {
             })
             .end(function (err, result) {
                 should(err).be.null;
-                should(result.status).be.equal(500);
+                should(result.status).be.equal(302);
                 done();
             });
     });
@@ -84,8 +84,7 @@ describe('Login SignUp', function () {
                 confirm: '123456'
             })
             .end(function (err, result) {
-                should(err).be.null;
-                should(result.status).be.equal(500);
+                should(result.status).be.equal(302);
                 done();
             });
     });

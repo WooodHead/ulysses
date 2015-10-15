@@ -4,9 +4,13 @@ const session = require('express-session');
 const Passport = require('passport');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
-const lusca = require('lusca');
 const RedisStore = require('connect-redis')(session);
 const PassportConfig = require('../auth/LocalPassportHandler');
+
+if (process.env.CI) {
+
+    const lusca = require('lusca');
+}
 
 module.exports = function (env) {
 
@@ -22,17 +26,22 @@ module.exports = function (env) {
     const passportSession = Passport.session();
     const flashed = flash();
 
-    const csrfSession = lusca({
-        csrf: true,
-        xframe: 'SAMEORIGIN',
-        xssProtection: true
-    });
-
     env.use(cookies);
     env.use(definedSession);
     env.use(passportInitialized);
     env.use(passportSession);
-    env.use(csrfSession);
+
+    if (process.env.CI) {
+
+        const csrfSession = lusca({
+            csrf: true,
+            xframe: 'SAMEORIGIN',
+            xssProtection: true
+        });
+
+        env.use(csrfSession);
+    }
+
     env.use(flashed);
 
     const views = [];
@@ -48,7 +57,12 @@ module.exports = function (env) {
         app.use(definedSession);
         app.use(passportInitialized);
         app.use(passportSession);
-        app.use(csrfSession);
+
+        if (process.env.CI) {
+
+            app.use(csrfSession);
+        }
+
         app.use(flashed);
 
         app.use(function (req, res, next) {
