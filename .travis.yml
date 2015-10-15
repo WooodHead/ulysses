@@ -18,3 +18,7 @@ before_script:
 
 services:
   - redis-server
+
+
+sudo: required
+dist: trusty
