@@ -1,7 +1,8 @@
 {
-    "name": "Ulysses",
-    "dependencies": {
+  "name": "Ulysses",
+  "dependencies": {
     "jquery": "^2.1.4",
-    "bootstrap-sass": "^3.3.5"
-    }
+    "bootstrap-sass": "^3.3.5",
+    "moment": "~2.10.6"
+  }
 }

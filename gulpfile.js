@@ -21,7 +21,8 @@ const production = process.env.PRODUCTION === 'production' || isDebugMode;
 gulp.task('components', function () {
     return gulp.src([
         'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap-stylesheet/assets/javascript/bootstrap.js'
+        'bower_components/bootstrap-stylesheet/assets/javascript/bootstrap.js',
+        'bower_components/moment/min/moment-with-locales.js'
     ]).pipe(concat('components.js'))
         .pipe(gulpIf(production, uglify({mangle: false})))
         .pipe(gulp.dest('public/js'));
