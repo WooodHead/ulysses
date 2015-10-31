@@ -66,9 +66,11 @@ module.exports = function (sequelize, dataType) {
             defaultValue: 0,
             comment: '0 = no contributions from others, 1 = contributions from organisation, 2 = free for everyone'
         },
-        private: {
-            type: dataType.BOOLEAN,
-            defaultValue: false
+        visibility: {
+            type: dataType.ENUM,
+            values: [0, 1, 2, 3],
+            defaultValue: 0,
+            comment: '0 = everybody can see it, 1 = only for registered users, 2 = only members of your organisation can see it, 3 = only you and invited members can see it'
         },
         cloneable: {
             type: dataType.BOOLEAN,
@@ -92,7 +94,7 @@ module.exports = function (sequelize, dataType) {
                 });
 
             }, indexes: function () {
-                
+
                 sequelize.getQueryInterface().addIndex('repositories', {
                     type: 'FULLTEXT',
                     unique: false,

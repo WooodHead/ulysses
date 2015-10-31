@@ -1,0 +1,27 @@
+extends ../../../../../views/layout
+block content
+    .page-header-wrapper
+        .page-header
+            h3 New Repository
+        form.form-horizontal(id='new-repository-form', method='POST')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+                label.col-sm-3.control-label(for='name') Name
+                .col-sm-7
+                    input.form-control(type='text', name='name', id='name', placeholder='Name', autofocus)
+            .form-group
+                label.col-sm-3.control-label(for='description') Description
+                .col-sm-7
+                    textarea.form-control(name='description', id='description', placeholder='Description')
+            .form-group
+                label.col-sm-3.control-label(for='visibility') Visibility
+                .col-sm-7
+                    select.form-control(name='visibility', id='visibility')
+                        option Public (everybody can see it)
+                        option Member-only (only for registered users)
+                        option Organisation (only members of your organisation can see it)
+                        option Private (only you and invited members can see it)
+            .form-group
+                label.col-sm-3.control-label(for='clone') Allow clones
+                .col-sm-7
+                    input.form-control(type='checkbox', name='clone', id='clone', checked=true)
