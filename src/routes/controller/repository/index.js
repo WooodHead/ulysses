@@ -1,3 +1,7 @@
+const path = require('path');
+const config = require('../../../../config/AppConfig');
+const Git = require("nodegit");
+
 const Express = require('express');
 const Router = Express.Router();
 const commonModel = require('../../../model/commonModel');
@@ -55,6 +59,17 @@ module.exports = function (passport, csrf, flash) {
      * Creates a new repository for this user
      */
     Router.post('/repository/new', /* PermissionValidation.isLoggedIn,*/ function (req, res, next) {
+
+        req.assert('name', 'A repository name is required').len(1);
+
+        const errors = req.validationErrors();
+        if (errors) {
+            req.flash('errors', errors);
+            return res.redirect('/repository/new');
+        }
+
+
+
         res.render('index');
     });
 

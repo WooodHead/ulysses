@@ -22,6 +22,13 @@ block content
                         option Organisation (only members of your organisation can see it)
                         option Private (only you and invited members can see it)
             .form-group
-                label.col-sm-3.control-label(for='clone') Allow clones
-                .col-sm-7
-                    input.form-control(type='checkbox', name='clone', id='clone', checked=true)
+                .row
+                    label.col-sm-3.control-label(for='clone') Allow clones
+                    .col-md-1
+                        input.col-md-1.form-control(type='checkbox', name='clone', id='clone', checked=true)
+                    label.col-sm-2.control-label(for='issue') Issue tracker
+                    .col-md-1
+                        input.col-md-1.form-control(type='checkbox', name='issue', id='issue', checked=true)
+                    label.col-sm-2.control-label(for='wiki') Wiki integration
+                    .col-md-1
+                        input.col-md-1.form-control(type='checkbox', name='wiki', id='wiki', checked=true)

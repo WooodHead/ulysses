@@ -6,5 +6,8 @@ module.exports = {
         family: 4,
         user: '',
         db: 0
+    },
+    git: {
+        basePath: '../temp/git'
     }
 };
