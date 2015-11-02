@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "test": "mocha --reporter spec ./test/test-*.js",
-    "dev": "nodemon --exec babel-node ./bin/www"
+    "dev": "nodemon --exec babel-node ./bin/www",
+    "lint": "eslint src"
   },
   "engines": {
     "node": ">=4.0.0"

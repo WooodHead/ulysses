@@ -69,7 +69,6 @@ module.exports = function (passport, csrf, flash) {
         }
 
 
-
         res.render('index');
     });
 
