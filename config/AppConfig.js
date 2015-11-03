@@ -8,6 +8,6 @@ module.exports = {
         db: 0
     },
     git: {
-        basePath: '../temp/git'
+        basePath: './test/output/git'
     }
 };

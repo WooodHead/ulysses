@@ -2,7 +2,7 @@
   "name": "Ulysses",
   "version": "0.0.1",
   "scripts": {
-    "test": "mocha --reporter spec ./test/test-*.js",
+    "test": "mocha  --reporter spec ./test/test-*.js",
     "dev": "nodemon --exec babel-node ./bin/www",
     "lint": "eslint src"
   },
@@ -44,6 +44,7 @@
     "validator": "^4.2.0"
   },
   "devDependencies": {
+    "babel": "^6.0.15",
     "bower": "^1.5.3",
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
