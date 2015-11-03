@@ -36,7 +36,9 @@ module.exports = function (sequelize, dataType) {
             type: dataType.ENUM,
             values: [0, 1, 2, 3],
             defaultValue: 1,
+            /*eslint-disable */
             comment: '0 = everybody can create issue (with or without an account), 1 = only registered members, 2 = only group member, 3 = only the owner'
+            /*eslint-enable */
         },
         wikiEnabled: {
             type: dataType.BOOLEAN,
@@ -64,13 +66,17 @@ module.exports = function (sequelize, dataType) {
             type: dataType.ENUM,
             values: [0, 1, 2],
             defaultValue: 0,
+            /*eslint-disable */
             comment: '0 = no contributions from others, 1 = contributions from organisation, 2 = free for everyone'
+            /*eslint-enable */
         },
         visibility: {
             type: dataType.ENUM,
             values: [0, 1, 2, 3],
             defaultValue: 0,
+            /*eslint-disable */
             comment: '0 = everybody can see it, 1 = only for registered users, 2 = only members of your organisation can see it, 3 = only you and invited members can see it'
+            /*eslint-enable */
         },
         cloneable: {
             type: dataType.BOOLEAN,

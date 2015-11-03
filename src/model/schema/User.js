@@ -139,7 +139,7 @@ module.exports = function (sequelize, dataType) {
                     }).error(function (err) {
 
                         cb(err, null);
-                    })
+                    });
             }, findUserByUsername: function (username, cb) {
 
                 User.findOne(
@@ -153,7 +153,7 @@ module.exports = function (sequelize, dataType) {
                     }).error(function (err) {
 
                         cb(err, null);
-                    })
+                    });
             }
         }
     }, {paranoid: true});
