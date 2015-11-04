@@ -6,6 +6,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const RedisStore = require('connect-redis')(session);
 const PassportConfig = require('../auth/LocalPassportHandler');
+const env = require('../util/env');
 
 if (process.env.CI) {
 
@@ -31,7 +32,7 @@ module.exports = function (env) {
     env.use(passportInitialized);
     env.use(passportSession);
 
-    if (!process.env.CI) {
+    if (env.isCITest) {
 
         const csrfSession = lusca({
             csrf: true,
@@ -58,7 +59,7 @@ module.exports = function (env) {
         app.use(passportInitialized);
         app.use(passportSession);
 
-        if (!process.env.CI) {
+        if (env.isCITest) {
 
             app.use(csrfSession);
         }
