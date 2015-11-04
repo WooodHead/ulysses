@@ -10,14 +10,6 @@ const app = require('../app');
 describe('Login SignUp', function () {
     this.timeout(999999);
 
-    before(function (done) {
-        runningApp = spawn('node', [appPath]);
-
-        setTimeout(function () {
-            done();
-        }, 800);
-    });
-
     it('should get the login page', function (done) {
         request(app)
             .get('/login')
@@ -85,14 +77,8 @@ describe('Login SignUp', function () {
             })
             .end(function (err, result) {
                 should(result.status).be.equal(302);
+                should(err).be.null();
                 done();
             });
-    });
-
-    after(function (done) {
-        runningApp.kill('SIGKILL');
-        setTimeout(function () {
-            done();
-        }, 500);
     });
 });

@@ -31,7 +31,7 @@ module.exports = function (env) {
     env.use(passportInitialized);
     env.use(passportSession);
 
-    if (process.env.CI) {
+    if (!process.env.CI) {
 
         const csrfSession = lusca({
             csrf: true,
@@ -58,7 +58,7 @@ module.exports = function (env) {
         app.use(passportInitialized);
         app.use(passportSession);
 
-        if (process.env.CI) {
+        if (!process.env.CI) {
 
             app.use(csrfSession);
         }
