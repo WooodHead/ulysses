@@ -2,8 +2,8 @@ const gravatar = require('gravatar');
 const Passport = require('passport');
 const PassportConfig = require('../../../auth/LocalPassportHandler');
 const PasswordCrypto = require('../../../auth/PasswordCrypt');
-const User = require('../../../model/commonModel').user;
-const Repository = require('../../../model/commonModel').repository;
+const User = require('../../../model/export').user;
+const Repository = require('../../../model/export').repository;
 const Express = require('express');
 const Router = Express.Router();
 

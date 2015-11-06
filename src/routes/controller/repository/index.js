@@ -4,7 +4,7 @@ const Git = require('nodegit');
 
 const Express = require('express');
 const Router = Express.Router();
-const commonModel = require('../../../model/commonModel');
+const commonModel = require('../../../model/export');
 
 const PermissionValidation = require('../../../auth/PermissionValidation');
 
