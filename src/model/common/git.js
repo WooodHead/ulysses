@@ -13,7 +13,7 @@ class CommonGit {
     create (done) {
         const combinedPath = this.combinePath();
 
-        Git.Repository.init(combinedPath, true)
+        Git.Repository.init(combinedPath, 1)
             .then(function (repository) {
                 done(null, repository);
             }).catch(function (err) {
@@ -28,8 +28,13 @@ class CommonGit {
     }
 
     delete (done) {
-        fs.unlink(this.combinePath(), function (err) {
-            done(err);
+        const combinedPath = this.combinePath();
+        fs.chmod(combinedPath, '777', function (err) {
+            if (!err) {
+                fs.unlink(combinedPath, function (err) {
+                    done(err);
+                });
+            }
         });
     }
 }
