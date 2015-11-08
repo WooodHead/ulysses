@@ -5,8 +5,11 @@ const Passport = require('passport');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const RedisStore = require('connect-redis')(session);
+
 const PassportConfig = require('../auth/LocalPassportHandler');
 const env = require('../util/env');
+
+const config = require('../../config/AppConfig');
 
 if (process.env.CI) {
 
@@ -20,7 +23,7 @@ module.exports = function (env) {
         resave: false,
         saveUninitialized: true,
         store: new RedisStore(),
-        secret: 'ulysses'
+        secret: config.app.connection.security.cookieSecret
     });
 
     const passportInitialized = Passport.initialize();

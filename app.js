@@ -18,7 +18,7 @@ const path = require('path');
 
 const config = require('./config/AppConfig');
 
-const syncRequired = process.env.SYNC_DB === 'yes';
+const syncRequired = (process.env.SYNC_DB === 'yes') || config.db.syncOnStartUp;
 // Init schema
 // WARNING: Forced sync => drop table!
 require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(function (result) {
@@ -77,7 +77,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', config.port);
+app.set('port', config.app.connection.port);
 
 const server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + server.address().port);
