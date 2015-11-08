@@ -11,12 +11,12 @@ const cache = require('gulp-cached');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
-const sassPath = './src/assets/stylesheet/*.scss';
-const sassPathComponents = './src/assets/stylesheet/components/components.scss';
+const sassPath = './src/assets/stylesheet/**/*.scss';
 const jsPath = './src/assets/js/*.js';
 
 const isDebugMode = true;
 const production = process.env.PRODUCTION === 'production' || isDebugMode;
+
 
 gulp.task('components', function () {
     return gulp.src([
@@ -27,6 +27,7 @@ gulp.task('components', function () {
         .pipe(gulpIf(production, uglify({mangle: false})))
         .pipe(gulp.dest('public/js'));
 });
+
 
 gulp.task('js', ['components'], function () {
     return gulp.src(jsPath).pipe(concat('source.js'))
@@ -42,7 +43,7 @@ gulp.task('scss-lint', function () {
 });
 
 gulp.task('scss-components', function () {
-    gulp.src(sassPathComponents)
+    gulp.src(sassPath)
         .pipe(sass()
             .on('error', sass.logError))
         .pipe(gulpIf(production, minify()))
