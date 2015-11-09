@@ -11,7 +11,7 @@ const cache = require('gulp-cached');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
-const sassPath = './src/assets/stylesheet/**/*.scss';
+const sassPath = './src/assets/stylesheet/app/main.scss';
 const jsPath = './src/assets/js/*.js';
 
 const isDebugMode = true;
@@ -42,8 +42,10 @@ gulp.task('scss-lint', function () {
         .pipe(scsslint());
 });
 
+
+const sassPathComponents = './src/assets/stylesheet/external/components/components.scss';
 gulp.task('scss-components', function () {
-    gulp.src(sassPath)
+    gulp.src(sassPathComponents)
         .pipe(sass()
             .on('error', sass.logError))
         .pipe(gulpIf(production, minify()))
