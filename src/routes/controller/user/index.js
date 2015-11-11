@@ -222,7 +222,18 @@ module.exports = function () {
      * Deletes the user account
      */
     Router.get('/delete/u/:user', function (req, res, next) {
-        res.redirect('/');
+        User.findOne({
+            where: {
+                username: req.params.user
+            }
+        }).then(function (user) {
+            user.destroy().then(function (res) {
+                res.redirect('/');
+            });
+        }).error(function (err) {
+            console.log(err);
+            res.redirect('/');
+        });
     });
 
 
