@@ -22,10 +22,10 @@ function existsRepository (repositoryName, ownerId, cb) {
             }
         })
         .then(function (result) {
-
+            cb(null, result);
         })
         .error(function (err) {
-
+            cb(err, null);
         });
 }
 
@@ -74,8 +74,23 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/repository/new');
         }
 
+        const name = req.body.name;
+        Repository.create(
+            {
+                title: req.body.name,
+                description: req.body.description,
+                visibility: req.body.visibility,
+                cloneable: req.body.clone,
+                wiki: req.body.wiki
+            }
+        ).then(function (result) {
 
-        res.render('index');
+            res.redirect('/u/' + req.user + '/' + name);
+        }).error(function (err) {
+            // TODO handle this case somehow? maybe flash errors?
+            res.render('index');
+        });
+
     });
 
 
@@ -94,6 +109,7 @@ module.exports = function (passport, csrf, flash) {
         PermissionValidation.isLoggedIn,
         PermissionValidation.isOwner,
         function (req, res, next) {
+
             res.render('index');
         });
 
@@ -105,6 +121,7 @@ module.exports = function (passport, csrf, flash) {
         PermissionValidation.isLoggedIn,
         PermissionValidation.isOwner,
         function (req, res, next) {
+
             res.render('index');
         });
 
@@ -115,6 +132,7 @@ module.exports = function (passport, csrf, flash) {
     Router.post('/u/:user/:repository/settings',
         PermissionValidation.isLoggedIn,
         PermissionValidation.isOwner, function (req, res, next) {
+
             res.render('index');
         });
 
@@ -126,6 +144,7 @@ module.exports = function (passport, csrf, flash) {
         PermissionValidation.isLoggedIn,
         PermissionValidation.isOwner,
         function (req, res, next) {
+
             res.render('index');
         });
 
@@ -137,6 +156,7 @@ module.exports = function (passport, csrf, flash) {
         PermissionValidation.isLoggedIn,
         PermissionValidation.isOwner,
         function (req, res, next) {
+
             res.render('index');
         });
 
@@ -166,6 +186,7 @@ module.exports = function (passport, csrf, flash) {
     Router.post('/u/:user/:repository/:branch/rename',
         PermissionValidation.isLoggedIn,
         function (req, res, next) {
+
             res.render('index');
         });
 
