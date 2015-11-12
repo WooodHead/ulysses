@@ -65,7 +65,7 @@ module.exports = function (sequelize, dataType) {
         contribution: {
             type: dataType.ENUM,
             values: [0, 1, 2],
-            defaultValue: 0,
+            defaultValue: 2,
             /*eslint-disable */
             comment: '0 = no contributions from others, 1 = contributions from organisation, 2 = free for everyone'
             /*eslint-enable */
