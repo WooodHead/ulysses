@@ -6,7 +6,7 @@ const Express = require('express');
 const Router = Express.Router();
 const commonModel = require('../../../model/export');
 
-const PermissionValidation = require('../../../auth/PermissionValidation');
+const PermissionValidation = require('../../../auth/permission_validation');
 
 const User = commonModel.user;
 const Repository = commonModel.repository;

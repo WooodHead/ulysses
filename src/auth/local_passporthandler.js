@@ -1,7 +1,7 @@
 const User = require('../model/bootstrap').sequelize.models.users;
 const Passport = require('passport');
 const LocalPassport = require('passport-local').Strategy;
-const PasswordCrypt = require('./PasswordCrypt');
+const PasswordCrypt = require('./passwordcrypt');
 
 Passport.serializeUser(function (user, done) {
 

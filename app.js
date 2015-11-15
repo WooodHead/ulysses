@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 
 const flash = require('express-flash');
 const validator = require('express-validator');
-const PassportConfig = require('./src/auth/LocalPassportHandler');
+const PassportConfig = require('./src/auth/local_passporthandler');
 const Passport = require('passport');
 
 const path = require('path');

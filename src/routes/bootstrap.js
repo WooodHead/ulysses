@@ -6,7 +6,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const RedisStore = require('connect-redis')(session);
 
-const PassportConfig = require('../auth/LocalPassportHandler');
+const PassportConfig = require('../auth/local_passporthandler');
 const env = require('../util/env');
 
 const config = require('../../config/AppConfig');
