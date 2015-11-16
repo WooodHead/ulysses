@@ -6,6 +6,7 @@ const Express = require('express');
 const Router = Express.Router();
 const commonModel = require('../../../model/export');
 
+const CommonGit = require('../../../model/common/git');
 const PermissionValidation = require('../../../auth/permission_validation');
 
 const User = commonModel.user;
@@ -74,6 +75,8 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/repository/new');
         }
 
+        const repoPath = CommonGit(req.user.id, req.body.name).path();
+
         const name = req.body.name;
         Repository.create(
             {
@@ -81,7 +84,10 @@ module.exports = function (passport, csrf, flash) {
                 description: req.body.description,
                 visibility: req.body.visibility,
                 cloneable: req.body.clone,
-                wiki: req.body.wiki
+                wiki: req.body.wiki,
+                path: repoPath,
+                ownerId: req.user.id
+
             }
         ).then(function (result) {
 

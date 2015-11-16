@@ -37,6 +37,10 @@ class CommonGit {
             }
         });
     }
+
+    path () {
+        return this.combinePath();
+    }
 }
 
 
