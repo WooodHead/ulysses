@@ -75,9 +75,13 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/repository/new');
         }
 
-        const repoPath = CommonGit(req.user.id, req.body.name).path();
+        // Right now use something like a dummy path
+        // const repoPath = CommonGit(req.user.id, req.body.name).path();
+        const repoPath = '/test/test/demo';
 
         const name = req.body.name;
+
+        const ownerId = req.user[0].dataValues.id;
         Repository.create(
             {
                 title: req.body.name,
@@ -86,8 +90,7 @@ module.exports = function (passport, csrf, flash) {
                 cloneable: req.body.clone,
                 wiki: req.body.wiki,
                 path: repoPath,
-                ownerId: req.user.id
-
+                OwnerId: ownerId
             }
         ).then(function (result) {
 
