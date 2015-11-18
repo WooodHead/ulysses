@@ -82,17 +82,15 @@ module.exports = function (passport, csrf, flash) {
         const name = req.body.name;
 
         const ownerId = req.user[0].dataValues.id;
-        Repository.create(
-            {
-                title: req.body.name,
-                description: req.body.description,
-                visibility: req.body.visibility,
-                cloneable: req.body.clone,
-                wiki: req.body.wiki,
-                path: repoPath,
-                OwnerId: ownerId
-            }
-        ).then(function (result) {
+        Repository.create({
+            title: req.body.name,
+            description: req.body.description,
+            visibility: req.body.visibility,
+            cloneable: req.body.clone,
+            wiki: req.body.wiki,
+            path: repoPath,
+            OwnerId: ownerId
+        }).then(function (result) {
 
             res.redirect('/u/' + req.user + '/' + name);
         }).error(function (err) {
