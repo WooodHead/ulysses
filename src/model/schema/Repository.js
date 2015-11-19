@@ -1,6 +1,7 @@
 module.exports = function (sequelize, dataType) {
+    const tableNames = require('../table_names');
 
-    const Repository = sequelize.define('repositories', {
+    const Repository = sequelize.define(tableNames.repository, {
         id: {
             primaryKey: true,
             autoIncrement: true,
@@ -91,7 +92,7 @@ module.exports = function (sequelize, dataType) {
              */
             associate: function (models) {
 
-                Repository.belongsTo(models.get('users'), {
+                Repository.belongsTo(models.get(tableNames.user), {
                     onDelete: 'CASCADE',
                     foreignKey: {
                         allowNull: false
@@ -101,13 +102,19 @@ module.exports = function (sequelize, dataType) {
 
             }, indexes: function () {
 
-                sequelize.getQueryInterface().addIndex('repositories', {
+                sequelize.getQueryInterface().addIndex(tableNames.repository, {
                     type: 'FULLTEXT',
                     unique: false,
                     fields: ['title']
                 });
 
-                sequelize.getQueryInterface().addIndex('repositories', {
+                sequelize.getQueryInterface().addIndex(tableNames.repository, {
+                    type: 'FULLTEXT',
+                    unique: false,
+                    fields: ['description', 'title']
+                });
+
+                sequelize.getQueryInterface().addIndex(tableNames.repository, {
                     type: 'FULLTEXT',
                     unique: false,
                     fields: ['OwnerId']
