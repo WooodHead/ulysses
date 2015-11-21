@@ -1,6 +1,9 @@
 {
   "name": "Ulysses",
   "version": "0.0.1",
+  "license": "-/-",
+  "description": "---",
+  "repository": "https://github.com/romankl/ulysses",
   "scripts": {
     "test": "mocha  --reporter spec ./test/test-*.js",
     "dev": "nodemon --exec babel-node ./bin/www",
