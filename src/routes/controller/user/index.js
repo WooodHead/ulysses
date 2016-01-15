@@ -2,7 +2,7 @@ const Express = require('express');
 const Router = Express.Router();
 const Passport = require('passport');
 const PassportConfig = require('../../../auth/local_passporthandler');
-const PasswordCrypto = require('../../../auth/passwordcrypt');
+const PasswordCrypto = require('../../../auth/password_crypt');
 
 const Schema = require('../../../model/export');
 

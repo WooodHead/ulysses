@@ -1,6 +1,8 @@
 'use strict';
 
-const PasswordCrypto = require('../../auth/passwordcrypt');
+const Passport = require('passport');
+
+const PasswordCrypto = require('../../auth/password_crypt');
 const gravatar = require('gravatar');
 
 const Schema = require('../export');

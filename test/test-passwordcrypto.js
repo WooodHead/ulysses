@@ -1,4 +1,4 @@
-const PasswordCrypto = require('../src/auth/passwordcrypt');
+const PasswordCrypto = require('../src/auth/password_crypt');
 
 const should = require('should');
 
