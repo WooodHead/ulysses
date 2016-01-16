@@ -28,6 +28,9 @@ before_script:
 services:
   - redis-server
 
+cache:
+  directories:
+    - node_modules
 
 sudo: false
 # dist: trusty
