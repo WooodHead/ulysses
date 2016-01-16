@@ -10,11 +10,7 @@ const PassportConfig = require('../auth/local_passporthandler');
 const env = require('../util/env');
 
 const config = require('../../config/AppConfig');
-
-if (process.env.CI) {
-
-    const lusca = require('lusca');
-}
+const lusca = require('lusca');
 
 module.exports = function (env) {
 
@@ -35,18 +31,16 @@ module.exports = function (env) {
     env.use(passportInitialized);
     env.use(passportSession);
 
-    if (env.isCITest) {
+    const csrfSession = lusca({
+        csrf: true,
+        xframe: 'SAMEORIGIN',
+        xssProtection: true
+    });
+    env.use(csrfSession);
 
-        const csrfSession = lusca({
-            csrf: true,
-            xframe: 'SAMEORIGIN',
-            xssProtection: true
-        });
-
-        env.use(csrfSession);
-    }
 
     env.use(flashed);
+
 
     const views = [];
     fs.readdirSync(__dirname + '/controller').forEach(function (name) {
@@ -61,11 +55,7 @@ module.exports = function (env) {
         app.use(definedSession);
         app.use(passportInitialized);
         app.use(passportSession);
-
-        if (env.isCITest) {
-
-            app.use(csrfSession);
-        }
+        app.use(csrfSession);
 
         app.use(flashed);
 
