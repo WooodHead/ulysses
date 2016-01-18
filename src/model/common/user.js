@@ -14,10 +14,11 @@ const Repository = Schema.repository;
  *
  * @param req {Object}
  * @param res {Object}
+ * @param next {Object}
  * @param templateResponse {Boolean}
  * @returns {*}
  */
-exports.signUp = function (req, res, templateResponse) {
+exports.signUp = function (req, res, next, templateResponse) {
 
     if (req.user) {
         return res.redirect('/');
@@ -40,39 +41,39 @@ exports.signUp = function (req, res, templateResponse) {
                 email: req.body.email
             }
         }).then(function (users) {
-            // we search using `findAll`, that should create an Array of users who have the same email.
-            if (users.length == 0) {
-                PasswordCrypto.cryptPassword(req.body.password, function (err, hashed) {
+        // we search using `findAll`, that should create an Array of users who have the same email.
+        if (users.length == 0) {
+            PasswordCrypto.cryptPassword(req.body.password, function (err, hashed) {
 
-                    const user = User.create({
-                        email: req.body.email,
-                        username: req.body.username,
-                        name: req.body.name,
-                        password: hashed,
-                        avatarUrl: gravatar.url(req.body.email, {s: '100', r: 'x', d: 'retro'}, true)
-                    }).then(function (result) {
+                const user = User.create({
+                    email: req.body.email,
+                    username: req.body.username,
+                    name: req.body.name,
+                    password: hashed,
+                    avatarUrl: gravatar.url(req.body.email, {s: '100', r: 'x', d: 'retro'}, true)
+                }).then(function (result) {
 
-                        req.login(result.dataValues, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
+                    req.login(result.dataValues, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
 
-                            res.redirect('/');
-                        });
-                    }).error(function (err) {
-
-                        console.log('err while creating a new user: ' + err);
+                        res.redirect('/');
                     });
-                });
-            } else {
-                // seems like the user already exists, redirect it
-                return res.redirect('/signup');
-            }
-        }).error(function (err) {
+                }).error(function (err) {
 
-            console.log(err);
-        });
+                    console.log('err while creating a new user: ' + err);
+                });
+            });
+        } else {
+            // seems like the user already exists, redirect it
+            return res.redirect('/signup');
+        }
+    }).error(function (err) {
+
+        console.log(err);
+    });
 };
 
 
@@ -82,7 +83,7 @@ exports.signUp = function (req, res, templateResponse) {
  * @param res {Object}
  * @param templateResponse {Boolean}
  */
-exports.login = function (req, res, templateResponse) {
+exports.login = function (req, res, next, templateResponse) {
 
     if (req.user) {
         return res.redirect('/');

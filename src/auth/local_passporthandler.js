@@ -43,14 +43,14 @@ Passport.use(new LocalPassport({usernameField: 'email'}, function (email, passwo
             if (match) {
                 done(null, user);
             } else {
-                done(null, false, {message: err.message});
+                done(null, false, {message: err});
             }
         });
     }).error(function (err) {
 
         console.log('err: ' + err);
         if (!user) {
-            return done(null, false, {message: err.message});
+            return done(null, false, {message: err});
         }
     });
 }));

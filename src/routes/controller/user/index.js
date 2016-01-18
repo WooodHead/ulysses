@@ -77,8 +77,13 @@ module.exports = function () {
     /**
      * Try to sign up using the posted credentials
      */
-    Router.post('/signup', function (req, res) {
-        CommonUser.signUp(req, res, true);
+    Router.post('/signup', function (req, res, next) {
+
+        if (req.user) {
+            return res.redirect('/');
+        }
+
+        CommonUser.signUp(req, res, next, true);
     });
 
 
@@ -86,7 +91,11 @@ module.exports = function () {
      * Try to log in
      */
     Router.post('/login', function (req, res, next) {
-        CommonUser.login(req, res, true);
+
+        if (req.user) {
+            return res.redirect('/');
+        }
+        CommonUser.login(req, res, next, true);
     });
 
 

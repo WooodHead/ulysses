@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const request = require('supertest');
 const should = require('should');
@@ -60,6 +62,7 @@ describe('Login SignUp', function () {
 
     });
 
+    let cookies = {};
     it('should try to create a new user', function (done) {
         request(app)
             .get('/signup')
@@ -68,6 +71,7 @@ describe('Login SignUp', function () {
                 should(result.status).be.equal(200);
 
                 const csrf = tUtil.extractCsrf(result.text);
+                cookies = tUtil.buildCookie(result.headers['set-cookie']);
 
                 request(app)
                     .post('/signup')
@@ -79,7 +83,7 @@ describe('Login SignUp', function () {
                         confirm: '1234567',
                         _csrf: csrf
                     })
-                    .set('Cookie', tUtil.buildCookie(result.headers['set-cookie']))
+                    .set('Cookie', cookies)
                     .end(function (err, result) {
                         should(err).be.null;
                         should(result.status).be.equal(302);
@@ -89,20 +93,40 @@ describe('Login SignUp', function () {
             });
     });
 
-    it.skip('should try to create a new user while already logged in', function (done) {
+    it('should try to create a new user while already logged in', function (done) {
+        let csrf = '';
+        let cookies = {};
         request(app)
-            .post('/signup')
-            .send({
-                email: 'test@test.com',
-                username: 'dummy',
-                name: 'dummy',
-                password: '123456',
-                confirm: '123456'
-            })
+            .get('/login')
             .end(function (err, result) {
-                should(result.status).be.equal(302);
-                should(err).be.null();
-                done();
+                should(err).be.null;
+                csrf = tUtil.extractCsrf(result.text);
+                cookies = tUtil.buildCookie(result.headers['set-cookie']);
+                request(app)
+                    .post('/login')
+                    .send({
+                        email: 'test@test.com',
+                        username: 'dummy',
+                        name: 'dummy',
+                        password: '123456',
+                        confirm: '123456',
+                        _csrf: csrf
+                    })
+                    .set('Cookie', cookies)
+                    .end(function (err, result) {
+                        should(err).be.null();
+                        should(result.text.match("Found. Redirecting to /")).be.true;
+
+                        request(app)
+                            .get('/signup')
+                            .set('Cookie', cookies)
+                            .end(function (err, res) {
+                                should(err).be.null();
+
+                                // This one should be improved. There is no real test behind it
+                                done();
+                            });
+                    });
             });
     });
 });

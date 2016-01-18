@@ -17,8 +17,9 @@ const Passport = require('passport');
 const path = require('path');
 
 const config = require('./config/AppConfig');
+const env = require('./src/util/env');
 
-const syncRequired = (process.env.SYNC_DB === 'yes') || config.db.syncOnStartUp;
+const syncRequired = (process.env.SYNC_DB === 'yes') || config.db.syncOnStartUp || env.isCITest;
 // Init schema
 // WARNING: Forced sync => drop table!
 require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(function (result) {
