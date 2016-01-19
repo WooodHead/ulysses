@@ -25,9 +25,18 @@ describe('test-common-git', function () {
     });
 
 
-    it.skip('should delete the old repository', function (done) {
+    it('should delete the old repository', function (done) {
         const testRepo = new git(5, 'dummy-repo');
-        testRepo.delete(function (err) {
+        testRepo.remove(function (err) {
+            should.not.exist(err);
+            done();
+        });
+    });
+
+
+    it('should delete a non-existing repository', function (done) {
+        const testRepo = new git(99, 'its-not-there-my-fried');
+        testRepo.remove(function (err) {
             should.not.exist(err);
             done();
         });

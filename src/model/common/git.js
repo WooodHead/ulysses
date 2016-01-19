@@ -3,6 +3,7 @@ const Git = require('nodegit');
 const config = require('../../../config/AppConfig');
 const fs = require('fs');
 const path = require('path');
+const rm = require('rimraf');
 
 class CommonGit {
     constructor (ownerId, repoName) {
@@ -27,15 +28,11 @@ class CommonGit {
         return path.join(resolvedBasePath, '' + this.ownerId, this.repoName);
     }
 
-    delete (done) {
+    remove(done) {
         const combinedPath = this.combinePath();
-        fs.chmod(combinedPath, '777', function (err) {
-            if (!err) {
-                fs.unlink(combinedPath, function (err) {
-                    done(err);
-                });
-            }
-        });
+        rm(combinedPath, (err) => {
+            done(err)
+        })
     }
 
     path () {
