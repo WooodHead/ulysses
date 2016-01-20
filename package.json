@@ -5,7 +5,7 @@
   "description": "---",
   "repository": "https://github.com/romankl/ulysses",
   "scripts": {
-    "test": "mocha  --reporter spec ./test/test-*.js",
+    "test": "eslint src && mocha  --reporter spec ./test/test-*.js",
     "dev": "nodemon --exec babel-node ./bin/www",
     "lint": "eslint src"
   },
