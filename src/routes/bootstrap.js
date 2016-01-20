@@ -60,8 +60,9 @@ module.exports = function (env) {
         app.use(flashed);
 
         app.use(function (req, res, next) {
-
-            res.locals.user = req.user;
+            if (req.user) {
+                res.locals.user = req.user[0].dataValues;
+            }
             next();
         });
 

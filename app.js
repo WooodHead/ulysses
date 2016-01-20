@@ -31,10 +31,6 @@ require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(func
 });
 
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-
 // middleware
 app.use(logger('dev'));
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
@@ -46,11 +42,6 @@ app.use(cookieParser());
 app.use(flash());
 
 app.use(Express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
-app.use(function (req, res, next) {
-    res.locals.user = req.user;
-    res.locals.version = require('./package.json').version;
-    next();
-});
 
 require('./src/routes/bootstrap')(app);
 
