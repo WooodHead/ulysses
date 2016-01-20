@@ -28,11 +28,11 @@ class CommonGit {
         return path.join(resolvedBasePath, '' + this.ownerId, this.repoName);
     }
 
-    remove(done) {
+    remove (done) {
         const combinedPath = this.combinePath();
         rm(combinedPath, (err) => {
-            done(err)
-        })
+            done(err);
+        });
     }
 
     path () {
