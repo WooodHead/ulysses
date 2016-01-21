@@ -60,8 +60,8 @@ module.exports = function (env) {
         app.use(flashed);
 
         app.use(function (req, res, next) {
-            if (req.user) {
-                res.locals.user = req.user[0].dataValues;
+            if (req.user !== undefined) {
+                res.locals.user = req.user.dataValues;
             }
             next();
         });

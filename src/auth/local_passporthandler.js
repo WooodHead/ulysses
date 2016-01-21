@@ -10,7 +10,7 @@ Passport.serializeUser(function (user, done) {
 
 Passport.deserializeUser(function (id, done) {
 
-    User.findAll({
+    User.findOne({
         where: {
             id: id
         }

@@ -81,7 +81,7 @@ module.exports = function (passport, csrf, flash) {
 
         const name = req.body.name;
 
-        const ownerId = req.user[0].dataValues.id;
+        const ownerId = req.user.id;
         Repository.create({
             title: req.body.name,
             description: req.body.description,

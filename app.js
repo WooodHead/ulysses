@@ -30,6 +30,8 @@ require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(func
     }
 });
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // middleware
 app.use(logger('dev'));
