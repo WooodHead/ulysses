@@ -76,8 +76,8 @@ module.exports = function (passport, csrf, flash) {
         }
 
         // Right now use something like a dummy path
-        // const repoPath = CommonGit(req.user.id, req.body.name).path();
-        const repoPath = '/test/test/demo';
+        const localRepository = new CommonGit(req.user.id, req.body.name);
+        const repoPath = localRepository.path();
 
         const name = req.body.name;
 
@@ -92,7 +92,10 @@ module.exports = function (passport, csrf, flash) {
             OwnerId: ownerId
         }).then(function (result) {
 
-            res.redirect('/u/' + req.user + '/' + name);
+            localRepository.create(function (err, result) {
+
+                res.redirect('/u/' + req.user.dataValues.name + '/' + name);
+            });
         }).error(function (err) {
             // TODO handle this case somehow? maybe flash errors?
             res.render('index');
