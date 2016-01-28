@@ -18,60 +18,41 @@ const Repository = Schema.repository;
  * @param templateResponse {Boolean}
  * @returns {*}
  */
-exports.signUp = function (req, res, next, templateResponse) {
-
-    if (req.user) {
-        return res.redirect('/');
-    }
-
-    req.assert('email', 'Email must be a valid mail').isEmail();
-    req.assert('password', 'Password too short - must be at least 6 characters long').len(6);
-    req.assert('confirm', 'Passwords aren\'t equal').equals(req.body.password);
-
-    const errors = req.validationErrors();
-    if (errors) {
-        req.flash('errors', errors);
-        return res.redirect('/signup');
-    }
+exports.signUp = function (mail, username, name, pw, cb) {
 
     // the user table has a primary key on the mail, it should be unique across the table.
     User.findAll(
         {
             where: {
-                email: req.body.email
+                email: mail
             }
         }).then(function (users) {
             // we search using `findAll`, that should create an Array of users who have the same email.
             if (users.length == 0) {
-                PasswordCrypto.cryptPassword(req.body.password, function (err, hashed) {
+                PasswordCrypto.cryptPassword(pw, function (err, hashed) {
 
                     const user = User.create({
-                        email: req.body.email,
-                        username: req.body.username,
-                        name: req.body.name,
+                        email: mail,
+                        username: username,
+                        name: name,
                         password: hashed,
-                        avatarUrl: gravatar.url(req.body.email, {s: '100', r: 'x', d: 'retro'}, true)
+                        avatarUrl: gravatar.url(mail, {s: '100', r: 'x', d: 'retro'}, true)
                     }).then(function (result) {
 
-                        req.login(result.dataValues, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
-
-                            res.redirect('/');
-                        });
+                        cb(null, false, result);
                     }).error(function (err) {
 
                         console.log('err while creating a new user: ' + err);
+                        cb(err);
                     });
                 });
             } else {
                 // seems like the user already exists, redirect it
-                return res.redirect('/signup');
+                cb(null, true);
             }
         }).error(function (err) {
             console.log(err);
+            cb(err);
         });
 };
 

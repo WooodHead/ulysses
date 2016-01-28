@@ -83,7 +83,48 @@ module.exports = function () {
             return res.redirect('/');
         }
 
-        CommonUser.signUp(req, res, next, true);
+        req.assert('email', 'Email must be a valid mail').isEmail();
+        req.assert('password', 'Password too short - must be at least 6 characters long').len(6);
+        req.assert('confirm', 'Passwords aren\'t equal').equals(req.body.password);
+
+        const errors = req.validationErrors();
+        if (errors) {
+            req.flash('errors', errors);
+            return res.redirect('/signup');
+        }
+
+        const mail = req.body.email;
+        const username = req.body.username;
+        const name = req.body.name;
+        const pw = req.body.password;
+
+        CommonUser.signUp(mail, username, name, pw, function (err, isAlreadyThere, result) {
+
+            // maybe an internal error?
+            if (err) {
+
+                console.log(err);
+                return res.redirect('/signup');
+            }
+
+
+            // The user is already there
+            if (isAlreadyThere) {
+
+                return res.redirect('/signup', {msg: 'Already existing user'});
+            }
+
+
+            // The user record is now available, lets login
+            req.login(result.dataValues, function (err) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+                res.redirect('/');
+            });
+        });
     });
 
 
