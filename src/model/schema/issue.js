@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (sequelize, dataType) {
     const tableNames = require('../table_names');
 

@@ -1,3 +1,4 @@
+'use strict';
 
 
 exports.isOwner = function (req, res, next) {

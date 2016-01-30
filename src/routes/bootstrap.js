@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const Express = require('express');
 const session = require('express-session');

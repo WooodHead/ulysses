@@ -1,4 +1,5 @@
 'use strict';
+
 const Git = require('nodegit');
 const config = require('../../../config/AppConfig');
 const fs = require('fs');

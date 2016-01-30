@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
     repository: 'repositories',
     issue: 'issues',

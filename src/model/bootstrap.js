@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * This file is responsible for building the schema. It will read all other files in the
  * src/model/schema dir and build a corresponding schema.

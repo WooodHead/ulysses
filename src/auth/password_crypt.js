@@ -1,3 +1,5 @@
+'use strict';
+
 const Bcrypt = require('bcrypt-nodejs');
 
 const crypto = require('crypto');
