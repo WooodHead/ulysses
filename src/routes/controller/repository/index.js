@@ -65,7 +65,7 @@ module.exports = function (passport, csrf, flash) {
     /**
      * Creates a new repository for this user
      */
-    Router.post('/repository/new', /* PermissionValidation.isLoggedIn,*/ function (req, res, next) {
+    Router.post('/repository/new', /* PermissionValidation.isLoggedIn,*/  (req, res, next) => {
 
         req.assert('name', 'A repository name is required').len(1);
 
@@ -75,32 +75,27 @@ module.exports = function (passport, csrf, flash) {
             return res.redirect('/repository/new');
         }
 
-        // Right now use something like a dummy path
-        const localRepository = new CommonGit(req.user.id, req.body.name);
-        const repoPath = localRepository.path();
-
-        const name = req.body.name;
-
-        const ownerId = req.user.id;
-        Repository.create({
-            title: req.body.name,
-            description: req.body.description,
-            visibility: req.body.visibility,
-            cloneable: req.body.clone,
+        const options = {
             wiki: req.body.wiki,
-            path: repoPath,
-            OwnerId: ownerId
-        }).then(function (result) {
+            visibility: req.body.visibility,
+            cloneable: req.body.clone
+        };
+        const localRepository = new CommonGit(req.user.id,
+            req.body.name,
+            req.body.description,
+            options
+        );
 
-            localRepository.create(function (err, result) {
+        localRepository.create((err, result) => {
 
-                res.redirect('/u/' + req.user.dataValues.name + '/' + name);
-            });
-        }).error(function (err) {
-            // TODO handle this case somehow? maybe flash errors?
-            res.render('index');
+            if (err) {
+
+                console.log(err);
+                return res.render('/');
+            }
+
+            res.redirect('/u/' + req.user.dataValues.name + '/' + req.body.name);
         });
-
     });
 
 
