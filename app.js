@@ -21,16 +21,9 @@ const path = require('path');
 const config = require('./config/AppConfig');
 const env = require('./src/util/env');
 
-const syncRequired = (process.env.SYNC_DB === 'yes') || config.db.syncOnStartUp || env.isCITest;
-// Init schema
-// WARNING: Forced sync => drop table!
-require('./src/model/bootstrap').sequelize.sync({force: syncRequired}).then(function (result) {
-    if (syncRequired) {
-        const models = result.models;
-        models.repositories.indexes();
-        models.users.indexes();
-    }
-});
+
+// prepare the db connection
+require('./src/model/db_connector').connectToDb();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
