@@ -1,23 +1,43 @@
+'use strict';
+
 const should = require('should');
-const git = require('../src/model/common/git');
+const Git = require('../src/model/common/git');
+const User = require('../src/model/export').user;
+const DbConnector = require('../src/model/db_connector');
 
-describe('test-common-git', function () {
-    this.timeout(999999);
+describe('test-common-git', () => {
 
-    it('should create a new object', function (done) {
-        const obj = new git(5, 'test');
-        obj.should.have.property('ownerId');
-        obj.should.have.property('repoName');
+    it('should create the db connection', (done) => {
+        DbConnector.connectToDb(function (err) {
+            should.not.exist(err);
 
-        obj.repoName.should.be.a.String();
-        obj.ownerId.should.be.a.Number();
-
-        done();
+            done();
+        });
     });
 
-    it('should create a new repository', function (done) {
-        const testRepo = new git(5, 'dummy-repo');
-        testRepo.create(function (err, repo) {
+    it('should create a new object', (done) => {
+        User.create({
+            email: 'test-common-git',
+            username: 'test-common-git',
+            password: 123
+        }).then((result) => {
+            const obj = new Git(5, 'test', 'my dummy description', {wikiEnabled: false});
+            obj.should.have.property('ownerId');
+            obj.should.have.property('repoName');
+
+            obj.repoName.should.be.a.String();
+            obj.ownerId.should.be.a.Number();
+            done();
+        }).catch((err) => {
+            should.not.exist(err);
+            done()
+        })
+
+    });
+
+    it('should create a new repository', (done) => {
+        const testRepo = new Git(5, 'dummy-repo');
+        testRepo.create((err, repo) => {
             should.not.exist(err);
             should.exist(repo);
             done();
@@ -25,9 +45,9 @@ describe('test-common-git', function () {
     });
 
 
-    it('should delete the old repository', function (done) {
-        const testRepo = new git(5, 'dummy-repo');
-        testRepo.remove(function (err) {
+    it('should delete the old repository', (done) => {
+        const testRepo = new Git(5, 'dummy-repo');
+        testRepo.remove((err) => {
             should.not.exist(err);
             done();
         });
@@ -35,8 +55,8 @@ describe('test-common-git', function () {
 
 
     it('should delete a non-existing repository', function (done) {
-        const testRepo = new git(99, 'its-not-there-my-fried');
-        testRepo.remove(function (err) {
+        const testRepo = new Git(99, 'its-not-there-my-fried');
+        testRepo.remove((err) => {
             should.not.exist(err);
             done();
         });

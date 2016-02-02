@@ -1,12 +1,13 @@
+'use strict';
+
 const PasswordCrypto = require('../src/auth/password_crypt');
 
 const should = require('should');
 
-describe('Password Crypto', function () {
-    this.timeout(999999);
+describe('Password Crypto', () => {
 
-    it('should hash a new password', function (done) {
-        PasswordCrypto.cryptPassword('my test password', function (err, hashed) {
+    it('should hash a new password', (done) => {
+        PasswordCrypto.cryptPassword('my test password', (err, hashed) => {
             should(err).be.null;
             should(hashed).be.not.null;
             should(hashed).be.not.null;
@@ -15,15 +16,15 @@ describe('Password Crypto', function () {
         });
     });
 
-    it('should compare two (equal) hashed passwords', function (done) {
+    it('should compare two (equal) hashed passwords', (done) => {
         const password = 'my test password';
-        PasswordCrypto.cryptPassword(password, function (err, hashed) {
+        PasswordCrypto.cryptPassword(password, (err, hashed) => {
             should(err).be.null;
             should(hashed).be.not.null;
             should(hashed).be.not.null;
             should(hashed).be.a.String();
 
-            PasswordCrypto.comparePassword(password, hashed, function (err, match) {
+            PasswordCrypto.comparePassword(password, hashed, (err, match) => {
                 should(err).be.null;
                 should(match).be.not.null;
                 should(match).be.a.Boolean();
@@ -33,15 +34,15 @@ describe('Password Crypto', function () {
         });
     });
 
-    it('should compare two (non-equal) hashed passwords', function (done) {
+    it('should compare two (non-equal) hashed passwords', (done) => {
         const password = 'my test password';
-        PasswordCrypto.cryptPassword(password, function (err, hashed) {
+        PasswordCrypto.cryptPassword(password, (err, hashed) => {
             should(err).be.null;
             should(hashed).be.not.null;
             should(hashed).be.not.null;
             should(hashed).be.a.String();
 
-            PasswordCrypto.comparePassword('my-test-password', hashed, function (err, match) {
+            PasswordCrypto.comparePassword('my-test-password', hashed, (err, match) => {
                 should(err).be.null;
                 should(match).be.not.null;
                 should(match).be.a.Boolean();

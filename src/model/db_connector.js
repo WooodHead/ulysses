@@ -20,7 +20,5 @@ exports.connectToDb = function connectToToDb (done) {
             if (typeof done === 'function') {
                 done(null);
             }
-        }).catch((err) => {
-            done(err);
         });
 };
