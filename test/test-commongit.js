@@ -15,12 +15,14 @@ describe('test-common-git', () => {
         });
     });
 
+    var userId = 0;
     it('should create a new object', (done) => {
         User.create({
             email: 'test-common-git',
             username: 'test-common-git',
             password: 123
         }).then((result) => {
+            userId = result.dataValues.id;
             const obj = new Git(5, 'test', 'my dummy description', {wikiEnabled: false});
             obj.should.have.property('ownerId');
             obj.should.have.property('repoName');
@@ -36,7 +38,7 @@ describe('test-common-git', () => {
     });
 
     it('should create a new repository', (done) => {
-        const testRepo = new Git(5, 'dummy-repo');
+        const testRepo = new Git(userId, 'test', 'my dummy description', {wikiEnabled: false});
         testRepo.create((err, repo) => {
             should.not.exist(err);
             should.exist(repo);
