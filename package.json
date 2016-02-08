@@ -13,7 +13,7 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "babel": "^6.2.4",
+    "babel": "^6.5.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.0",
     "bower": "^1.7.7",
